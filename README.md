@@ -1,7 +1,7 @@
 # IoT Vision App
 Analyze images captured by USB camera and then move camera angle by using servo motors.
 
-# Tizen Vision API를 활용한 USB Camera Object Tracking 및 센서 활용 
+# Tizen Vision API 사용 USB Camera Object Tracking 및 센서 활용 
 
 
 ## HOW TO RUN - First run
