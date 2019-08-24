@@ -3,7 +3,14 @@ Analyze images captured by USB camera and then move camera angle by using servo 
 
 # Tizen Vision API 사용 USB Camera Object Tracking 및 센서 활용  
 ## Object Tracking을 통한 차량 내 질식예방 카메라  
-- Samsung Smart Things를 연동하여 차량 문이 잠구어져 있을 때, 움직임이 있을 시 비상등 점멸 및 창문을 열고 사용자에게 알림을 보내는 것을 목적으로 함.
+- Samsung Smart Things를 연동하여 차량 문이 잠구어져 있을 때, 움직임이 있을 시 비상등 점멸 및 창문을 열고 사용자에게 알림을 보내는 것을 목적으로 함.  
+- Headless Application으로 Tizen Midea Vision Surveillnce API 사용
+``` 
+mv_surveillance 헤더는
+http://tizen.org/feature/vision.image_recognition
+http://tizen.org/feature/vision.face_recognition 
+를 참조하였음.
+```
 
 # 
 ## HOW TO RUN - First run
