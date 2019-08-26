@@ -1,7 +1,7 @@
 # Tizen Midea Vision Surveillance API Object Tracking 및 센서 활용  
 ## Object Tracking을 통한 차량 내 질식예방 카메라  
 - Samsung Smart Things를 연동하여 차량 문이 잠구어져 있을 때(시동이 걸려있지 않을 때) 움직임이 감지 시 비상등 점멸 및 창문을 열고 사용자에게 알림을 보내는 것을 목적으로 함.  
-- Headless Application으로 Tizen Midea Vision Surveillnce API 사용  
+- Tizen Midea Vision Surveillnce API 사용  
 Tizen Dev API Refrence
 [링크](https://developer.tizen.org/development/api-references/native-application?redirect=https://developer.tizen.org/dev-guide/5.0.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__VISION__SURVEILLANCE__MODULE.html)
 ``` 
@@ -13,10 +13,65 @@ http://tizen.org/feature/vision.face_recognition
 
 - mv_surveillance API에 따른 App 구동 Loop  
 ![image](https://user-images.githubusercontent.com/38939634/63633555-31cd5100-c685-11e9-9787-9b3e2113b710.png)
+  
+## Tizen Craft Room API Refrence to USB Camera  
+- Application's Camera Life Cycle  
+![image](https://user-images.githubusercontent.com/38939634/63688820-5c650880-c843-11e9-8980-c2a0073c0c21.png)  
+1. 카메라 객체 생성  
+2. 를 통한 미리보기 상태  
+3. 캡쳐 후 자동반복  
+각 함수들은 프리뷰/캡쳐 중에도 이벤트를 받아야함으로 콜백으로 작성됨  
+[함수 참조](https://craftroom.tizen.org/simple-iot-camera/)  
 
+## Tizen Craft Room API Refrence to mv_surveillance  
+- 실제로 핵심적으로 사용 되었던 Object Tracking API  
+- Image Priview를 받아와 Vision API를 통해 처리하는 것이라 어느정도의 지연이 있었음  
+Image Privew -> Media Vision Callback Function -> Object Detecking -> Call callback Function  
+[참조](https://craftroom.tizen.org/%ec%95%84%ed%8b%b1%ec%9c%bc%eb%a1%9c-smart-surveillance-camera-%eb%a7%8c%eb%93%a4%ea%b8%b0/)  
+
+## Profiling Data
+
+### 카메라의 물리적 이동시간
+슈퍼슬로우 카메라로 촬영결과 500ms 정도 소요
+
+### Rpi
+
+#### Image Encoding (buffer -> jpg file)
+소요시간 20 ~ 135ms (가끔씩 오래걸림, 장담 못함)
+
+#### Vision Survailance (input -> cb event)
+소요시간 38 ~ 50ms
+
+
+### Artik
+
+#### Image Encoding (buffer -> jpg file)
+소요시간 10 ~ 20ms, 대부분 10ms 초반 안정적
+
+#### Vision Survailance (input -> cb event)
+소요시간 24 ~ 42ms
+
+## Vision 움직임 정보 형식 (exif)
+최대 244Byte 크기의 스트링으로 모두 숫자로 이루어져있다.
+
+첫 2자리 숫자는 분석결과의 타입으로 TT 의 값을 갖는다.
+
+그 다음 2자리 숫자는 포함된 움직임의 갯수 NN 의 값을 갖는다.
+
+하나의 움직임은 8개 숫자로 구성되며 xxyywwhh 의 값을 갖는다.
+
+xx: x 상대 좌표
+yy: y 상대 좌표
+ww: 상대 넓이
+hh: 상대 높이
+
+각각 0~99까지의 범위를 갖는 4개의 숫자를 이어놓은 것이다.
+1자리 숫자의 경우 0을 넣어서 전체 길이를 고정한다.
+
+TTNNxxyywwhhxxyywwhh....xxyywwhh 의 형태의 스트링이 된다.  
 
 # 
-## How To Set up Tizen and Artik Board 
+# How To Set up Tizen and Artik Board 
 ## HOW TO RUN - First run
 
 ### 1. Flash binary
@@ -133,43 +188,3 @@ sdb shell 'app_launcher -s iot-vision-camera'
  ./update-dashboard.sh
 ```
 
-## Profiling Data
-
-### 카메라의 물리적 이동시간
-슈퍼슬로우 카메라로 촬영결과 500ms 정도 소요
-
-### Rpi
-
-#### Image Encoding (buffer -> jpg file)
-소요시간 20 ~ 135ms (가끔씩 오래걸림, 장담 못함)
-
-#### Vision Survailance (input -> cb event)
-소요시간 38 ~ 50ms
-
-
-### Artik
-
-#### Image Encoding (buffer -> jpg file)
-소요시간 10 ~ 20ms, 대부분 10ms 초반 안정적
-
-#### Vision Survailance (input -> cb event)
-소요시간 24 ~ 42ms
-
-## Vision 움직임 정보 형식 (exif)
-최대 244Byte 크기의 스트링으로 모두 숫자로 이루어져있다.
-
-첫 2자리 숫자는 분석결과의 타입으로 TT 의 값을 갖는다.
-
-그 다음 2자리 숫자는 포함된 움직임의 갯수 NN 의 값을 갖는다.
-
-하나의 움직임은 8개 숫자로 구성되며 xxyywwhh 의 값을 갖는다.
-
-xx: x 상대 좌표
-yy: y 상대 좌표
-ww: 상대 넓이
-hh: 상대 높이
-
-각각 0~99까지의 범위를 갖는 4개의 숫자를 이어놓은 것이다.
-1자리 숫자의 경우 0을 넣어서 전체 길이를 고정한다.
-
-TTNNxxyywwhhxxyywwhh....xxyywwhh 의 형태의 스트링이 된다.
