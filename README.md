@@ -1,6 +1,6 @@
-# Tizen Vision API 사용 USB Camera Object Tracking 및 센서 활용  
+# Tizen Midea Vision Surveillance API Object Tracking 및 센서 활용  
 ## Object Tracking을 통한 차량 내 질식예방 카메라  
-- Samsung Smart Things를 연동하여 차량 문이 잠구어져 있을 때, 움직임이 있을 시 비상등 점멸 및 창문을 열고 사용자에게 알림을 보내는 것을 목적으로 함.  
+- Samsung Smart Things를 연동하여 차량 문이 잠구어져 있을 때(시동이 걸려있지 않을 때) 움직임이 감지 시 비상등 점멸 및 창문을 열고 사용자에게 알림을 보내는 것을 목적으로 함.  
 - Headless Application으로 Tizen Midea Vision Surveillnce API 사용  
 Tizen Dev API Refrence
 [링크](https://developer.tizen.org/development/api-references/native-application?redirect=https://developer.tizen.org/dev-guide/5.0.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__VISION__SURVEILLANCE__MODULE.html)
@@ -11,11 +11,12 @@ http://tizen.org/feature/vision.face_recognition
 를 참조하였음.
 ```
 
-- App 구동 Loop  
+- mv_surveillance API에 따른 App 구동 Loop  
 ![image](https://user-images.githubusercontent.com/38939634/63633555-31cd5100-c685-11e9-9787-9b3e2113b710.png)
 
 
 # 
+## How To Set up Tizen and Artik Board 
 ## HOW TO RUN - First run
 
 ### 1. Flash binary
