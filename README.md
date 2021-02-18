@@ -1,6 +1,14 @@
-# Tizen Midea Vision Surveillance API Object Tracking 및 센서 활용  
+# 2018년 정보통신산업진흥원 주관 삼성 타이젠 미니해커톤 
+- Tizen Midea Vision Surveillance API Object Tracking 및 센서 활용  
+- 차량 내 어린이 질식사고를 예방하기 위한 스마트 블랙박스  
+
+![](https://images.velog.io/images/agugu95/post/9b0c8b86-00fc-4777-a87c-adb8964aa56f/2018%20%E1%84%86%E1%85%B5%E1%84%82%E1%85%B5%E1%84%92%E1%85%A2%E1%84%8F%E1%85%A5%E1%84%90%E1%85%A9%E1%86%AB%20%E1%84%91%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5.jpg)  
+
 ## Object Tracking을 통한 차량 내 질식예방 카메라  
-- Samsung Smart Things를 연동하여 차량 문이 잠구어져 있을 때(시동이 걸려있지 않을 때) 움직임이 감지 시 비상등 점멸 및 창문을 열고 사용자에게 알림을 보내는 것을 목적으로 함.  
+- Samsung Smart Things를 연동하여 사용자에게 알림 
+- 차량 문이 잠겨 있을 때와 시동이 걸려있지 않을 때, 카메라를 통해 움직임 감지 시 차량비상등 점멸 및 창문을 개방
+
+### 객체 검출 및 추적 API 사용
 - Tizen Midea Vision Surveillnce API 사용  
 Tizen Dev API Refrence
 [링크](https://developer.tizen.org/development/api-references/native-application?redirect=https://developer.tizen.org/dev-guide/5.0.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__VISION__SURVEILLANCE__MODULE.html)
@@ -13,12 +21,14 @@ http://tizen.org/feature/vision.face_recognition
 
 - mv_surveillance API에 따른 App 구동 Loop  
 ![image](https://user-images.githubusercontent.com/38939634/63633555-31cd5100-c685-11e9-9787-9b3e2113b710.png)
-  
+
+
 ## Tizen Craft Room API Refrence to USB Camera  
 - Application's Camera Life Cycle  
 ![image](https://user-images.githubusercontent.com/38939634/63688820-5c650880-c843-11e9-8980-c2a0073c0c21.png)  
+
 1. 카메라 객체 생성  
-2. 를 통한 미리보기 상태  
+2. Preview 객체를 통한 미리보기 상태  
 3. 캡쳐 후 자동반복  
 각 함수들은 프리뷰/캡쳐 중에도 이벤트를 받아야함으로 콜백으로 작성됨  
 [함수 참조](https://craftroom.tizen.org/simple-iot-camera/)  
@@ -29,12 +39,12 @@ http://tizen.org/feature/vision.face_recognition
 Image Privew -> Media Vision Callback Function -> Object Detecking -> Call callback Function  
 [참조](https://craftroom.tizen.org/%ec%95%84%ed%8b%b1%ec%9c%bc%eb%a1%9c-smart-surveillance-camera-%eb%a7%8c%eb%93%a4%ea%b8%b0/)  
 
-## Profiling Data
+## Profiling Image Data
 
 ### 카메라의 물리적 이동시간
 슈퍼슬로우 카메라로 촬영결과 500ms 정도 소요
 
-### Rpi
+### Rpi Board
 
 #### Image Encoding (buffer -> jpg file)
 소요시간 20 ~ 135ms (가끔씩 오래걸림, 장담 못함)
@@ -43,7 +53,7 @@ Image Privew -> Media Vision Callback Function -> Object Detecking -> Call callb
 소요시간 38 ~ 50ms
 
 
-### Artik
+### Artik Board
 
 #### Image Encoding (buffer -> jpg file)
 소요시간 10 ~ 20ms, 대부분 10ms 초반 안정적
